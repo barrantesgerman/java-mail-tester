@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    
+    <appender class="org.apache.log4j.DailyRollingFileAppender" name="file">
+        <param value="'.'yyyy-MM-dd'.log'" name="DatePattern"/>
+        <param value="appLogs/MailTester/log.log" name="File"/>
+        <param value="WARN" name="Threshold"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param value="%d{yyyy-MM-dd hh:mm:ss a} [%5p] %c{1}:%L - %m%n" name="ConversionPattern"/>
+        </layout>
+    </appender>
+    
+    <appender class="org.apache.log4j.ConsoleAppender" name="stdout">
+        <param value="System.out" name="Target"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param value="%d{yyyy-MM-dd hh:mm:ss a} [%5p] %c{1}:%L - %m%n" name="ConversionPattern"/>
+        </layout>
+    </appender>
+    
+    <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="500"/><!-- Adam: originalmente 500, pero dura mucho en aplicarse el log y no se puede dar tracking correctamente -->
+        <param name="Blocking" value="true" />
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="file"/>
+    </appender>
+    
+    <root>
+        <level value="debug"/>
+        <appender-ref ref="ASYNC"/>
+    </root>
+</log4j:configuration>
