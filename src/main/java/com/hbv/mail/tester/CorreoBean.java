@@ -1,5 +1,6 @@
 package com.hbv.mail.tester;
 
+import com.hbv.mail.tester.model.Adjunto;
 import com.hbv.mail.tester.model.Configuracion;
 import com.hbv.mail.tester.model.Contacto;
 import com.hbv.mail.tester.model.Correo;
@@ -50,6 +51,8 @@ public class CorreoBean implements Serializable {
     public String enviar() {
         correo.getDestinatarios().clear();
         correo.getDestinatarios().add(contacto);
+        correo.getAdjuntos().clear();
+        correo.getAdjuntos().add(new Adjunto("Contenido de prueba".getBytes(),"Adjunto.txt","text/plain"));
         try {
             correo.enviar();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correo enviado Exitosamente."));
