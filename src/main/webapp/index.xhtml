@@ -1,91 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Mail Tester</title>
+</h:head>
+<h:body>
+    <b:container id="contenedor">
 
-    <h:head>
-        <title>Mail Tester</title>
-    </h:head>
-    <h:body>
-        <h3>Mail Tester</h3>
-        <h:form id="formulario">
-            <h:messages id="mensajes" showSummary="true" />
-            <fieldset>
-                <legend>
-                    <h:outputLabel value="Es Local:"
-                                   for="esLocal"/>
-                    <h:selectBooleanCheckbox id="esLocal"
-                                             value="#{correoBean.correo.configuracion.esLocal}">
-                        <f:ajax event="click" render="datos_configuracion" />
-                    </h:selectBooleanCheckbox>
-                </legend>
-                <h:panelGrid id="datos_configuracion" columns="2">
+        <b:navBar id="navbar" brand="Mail Tester" inverse="true"/>
 
-                    <h:outputLabel value="Propiedades:"
-                                   for="propiedades"
-                                   rendered="#{correoBean.correo.configuracion.esLocal}"/>
-                    <h:inputTextarea id="propiedades"
-                                     rendered="#{correoBean.correo.configuracion.esLocal}"
-                                     value="#{correoBean.correo.configuracion.propiedades}"/>
+        <b:messages id="mensajes" showSummary="true" />
 
-                    <h:outputLabel value="JNDI:"
-                                   for="jndi"
-                                   rendered="#{!correoBean.correo.configuracion.esLocal}"/>
-                    <h:inputText id="jndi"
-                                 rendered="#{!correoBean.correo.configuracion.esLocal}"
-                                 value="#{correoBean.correo.configuracion.jndi}"/>
-                </h:panelGrid>
-            </fieldset>
+        <b:form id="formulario" horizontal="true">
 
-            <fieldset>
-                <legend>
-                    <h:outputLabel value="Requiere autenticación:" for="autenticacion"/>
-                    <h:selectBooleanCheckbox id="autenticacion"
-                                             value="#{correoBean.correo.configuracion.autenticacion}">
-                        <f:ajax event="click" render="datos_autenticar" />
-                    </h:selectBooleanCheckbox>
-                </legend>
-                <h:panelGrid id="datos_autenticar" columns="2">
-                    <h:outputLabel value="Usuario:"
-                                   rendered="#{correoBean.correo.configuracion.autenticacion}"
-                                   for="usuario"/>
-                    <h:inputText id="usuario"
-                                 rendered="#{correoBean.correo.configuracion.autenticacion}"
-                                 value="#{correoBean.correo.configuracion.usuario}"></h:inputText>
+            <b:panel id="configuracion" title="Configuración" collapsible="false">
+                <b:selectBooleanCheckbox
+                        id="esLocal"
+                        value="#{correoBean.correo.configuracion.esLocal}"
+                        label="Es Local"
+                        label-col-md="2"
+                        col-md="10"
+                        update="configuracion"
+                />
 
-                    <h:outputLabel value="Clave:"
-                                   rendered="#{correoBean.correo.configuracion.autenticacion}"
-                                   for="clave"/>
-                    <h:inputSecret id="clave"
-                                   rendered="#{correoBean.correo.configuracion.autenticacion}"
-                                   value="#{correoBean.correo.configuracion.clave}"></h:inputSecret>
-                </h:panelGrid>
-            </fieldset>
+                <b:inputTextarea
+                        id="propiedades"
+                        rendered="#{correoBean.correo.configuracion.esLocal}"
+                        value="#{correoBean.correo.configuracion.propiedades}"
+                        required="true"
+                        label="Propiedades"
+                        label-col-md="2"
+                        col-md="10"/>
 
-            <fieldset>
-                <legend>
-                    <h:outputLabel value="Correo:"/>
-                </legend>
-                <h:panelGrid id="datos_correo" columns="2">
-                    <h:outputLabel value="Nombre:" for="nombre"/>
-                    <h:inputText id="nombre" value="#{correoBean.contacto.nombre}"></h:inputText>
+                <b:inputText
+                        id="jndi"
+                        rendered="#{!correoBean.correo.configuracion.esLocal}"
+                        value="#{correoBean.correo.configuracion.jndi}"
+                        required="true"
+                        label="JNDI"
+                        label-col-md="2"
+                        col-md="10"/>
+            </b:panel>
 
-                    <h:outputLabel value="Correo:" for="correo"/>
-                    <h:inputText id="correo" value="#{correoBean.contacto.correo}"></h:inputText>
+            <b:panel id="autenticar" title="Autenticación" collapsible="false">
+                <b:selectBooleanCheckbox
+                        id="autenticacion"
+                        value="#{correoBean.correo.configuracion.autenticacion}"
+                        label="Requiere autenticación"
+                        label-col-md="2"
+                        col-md="10"
+                        update="autenticar"
+                />
 
-                    <h:outputLabel value="Asunto:" for="asunto"/>
-                    <h:inputText id="asunto" value="#{correoBean.correo.asunto}" required="true" maxlength="20"></h:inputText>
+                <b:inputText
+                        id="usuario"
+                        rendered="#{correoBean.correo.configuracion.autenticacion}"
+                        value="#{correoBean.correo.configuracion.usuario}"
+                        required="true"
+                        label="Usuario"
+                        label-col-md="2"
+                        col-md="10"/>
 
-                    <h:outputLabel value="Mensaje HTML:" for="mensajeHtml"/>
-                    <h:inputTextarea id="mensajeHtml" value="#{correoBean.correo.mensajeHtml}"></h:inputTextarea>
+                <b:inputSecret
+                        id="clave"
+                        rendered="#{correoBean.correo.configuracion.autenticacion}"
+                        value="#{correoBean.correo.configuracion.clave}"
+                        required="true"
+                        label="Clave"
+                        label-col-md="2"
+                        col-md="10"/>
+            </b:panel>
 
-                    <h:outputLabel value="Mensaje Texto:" for="mensajeText"/>
-                    <h:inputTextarea id="mensajeText" value="#{correoBean.correo.mensajeText}" required="true"></h:inputTextarea>
-                </h:panelGrid>
-            </fieldset>
-            <h:commandButton id="enviar" value="Enviar Correo" action="#{correoBean.enviar()}"></h:commandButton>
-        </h:form>
-    </h:body>
+            <b:panel id="datos_correo" title="Correo" collapsible="false">
+                <b:inputText
+                        id="nombre"
+                        value="#{correoBean.contacto.nombre}"
+                        required="true"
+                        label="Nombre"
+                        label-col-md="2"
+                        col-md="10"/>
+
+                <b:inputText
+                        id="correo"
+                        value="#{correoBean.contacto.correo}"
+                        required="true"
+                        label="Correo"
+                        label-col-md="2"
+                        col-md="10"/>
+
+                <b:inputText
+                        id="asunto"
+                        value="#{correoBean.correo.asunto}"
+                        required="true"
+                        maxlength="20"
+                        label="Asunto"
+                        label-col-md="2"
+                        col-md="10"/>
+
+                <b:inputTextarea
+                        id="mensajeHtml"
+                        value="#{correoBean.correo.mensajeHtml}"
+                        required="true"
+                        label="Mensaje HTML"
+                        label-col-md="2"
+                        col-md="10"/>
+
+                <b:inputTextarea
+                        id="mensajeText"
+                        value="#{correoBean.correo.mensajeText}"
+                        required="true"
+                        label="Mensaje Texto"
+                        label-col-md="2"
+                        col-md="10"/>
+
+                <b:commandButton id="enviar"
+                                 value="Enviar Correo"
+                                 look="primary"
+                                 action="#{correoBean.enviar()}"
+                                 offset-md="2"
+                                 col-md="2"/>
+            </b:panel>
+        </b:form>
+    </b:container>
+</h:body>
 </html>
