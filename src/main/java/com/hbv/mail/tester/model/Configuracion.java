@@ -6,23 +6,35 @@ import java.util.Properties;
 import javax.mail.Session;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
 import org.apache.commons.mail.DefaultAuthenticator;
 
 /**
- * Modelo que representa una configuraciòn de correo.
+ * Modelo que representa una configuración de correo.
  *
  * @author Herman Barrantes
  * @since 2015-01-08
  */
 public class Configuracion {
 
-    private boolean autenticacion;
-    private String usuario;
-    private String clave;
-    private boolean esLocal;
-    private String jndi;
-    private String propiedades;
-    private Session session;
+    private boolean autenticacion = true;
+    private String usuario = "<user>@gmail.com";
+    private String clave = "<password>";
+    private boolean esLocal = true;
+    private String jndi = "mail/app";
+    private String propiedades
+            = "mail.smtp.host=smtp.gmail.com\n"
+            + "mail.smtp.port=587\n"
+            + "mail.smtp.user=<user>@gbsys.com\n"
+            + "mail.smtp.password=<password>\n"
+            + "mail.smtp.from=<user>@gbsys.com\n"
+            + "mail.smtp.auth=true\n"
+            + "mail.smtp.starttls.enable=true\n"
+            + "mail.smtp.ssl.trust=smtp.gmail.com\n"
+            + "mail.debug=true\n"
+            + "mail.smtp.timeout=10000\n"
+            + "mail.smtp.connectiontimeout=10000\n"
+            + "mail.smtp.writetimeout=10000";
 
     public Configuracion() {
     }
@@ -76,13 +88,7 @@ public class Configuracion {
     }
 
     public Session getSession() throws Exception {
-        //Se obtiene la session
-        if (esLocal) {
-            session = cargarLocal();
-        } else {
-            session = cargarRemota();
-        }
-        return session;
+        return esLocal ? cargarLocal() : cargarRemota();
     }
 
     private Session cargarLocal() throws IOException {
