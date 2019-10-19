@@ -19,15 +19,15 @@ public class Configuracion {
 
     private boolean autenticacion = true;
     private String usuario = "<user>@gmail.com";
-    private String clave = "<password>";
+    private String clave = "";
     private boolean esLocal = true;
     private String jndi = "mail/app";
     private String propiedades
             = "mail.smtp.host=smtp.gmail.com\n"
             + "mail.smtp.port=587\n"
-            + "mail.smtp.user=<user>@gbsys.com\n"
+            + "mail.smtp.user=<user>@gmail.com\n"
             + "mail.smtp.password=<password>\n"
-            + "mail.smtp.from=<user>@gbsys.com\n"
+            + "mail.smtp.from=<user>@gmail.com\n"
             + "mail.smtp.auth=true\n"
             + "mail.smtp.starttls.enable=true\n"
             + "mail.smtp.ssl.trust=smtp.gmail.com\n"
