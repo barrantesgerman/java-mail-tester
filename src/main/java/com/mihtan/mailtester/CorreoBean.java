@@ -1,19 +1,15 @@
-package com.hbv.mail.tester;
+package com.mihtan.mailtester;
 
-import com.hbv.mail.tester.model.Adjunto;
-import com.hbv.mail.tester.model.Configuracion;
-import com.hbv.mail.tester.model.Contacto;
-import com.hbv.mail.tester.model.Correo;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@ManagedBean(name = "correoBean")
+@Named
 @ViewScoped
 public class CorreoBean implements Serializable {
 
@@ -52,7 +48,7 @@ public class CorreoBean implements Serializable {
         correo.getDestinatarios().clear();
         correo.getDestinatarios().add(contacto);
         correo.getAdjuntos().clear();
-        correo.getAdjuntos().add(new Adjunto("Contenido de prueba".getBytes(),"Adjunto.txt","text/plain"));
+        correo.getAdjuntos().add(new Adjunto("Contenido de prueba".getBytes(), "Adjunto.txt", "text/plain"));
         try {
             correo.enviar();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correo enviado Exitosamente."));
